@@ -24,31 +24,6 @@ public class Util {
 
     private static SessionFactory sessionFactory;
 
-    static {
-        try (InputStream inputStream = Util.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE_JDBC)) {
-            if (inputStream == null) {
-                System.err.println("Файл свойств не найден: " + PROPERTIES_FILE_JDBC);
-                throw new RuntimeException("Файл свойств " + PROPERTIES_FILE_JDBC + " не найден в classpath");
-            }
-
-            Properties properties = new Properties();
-            properties.load(inputStream);
-
-            url = properties.getProperty("jdbc.url");
-            username = properties.getProperty("jdbc.username");
-            password = properties.getProperty("jdbc.password");
-            driver = properties.getProperty("jdbc.driver");
-
-            System.out.println("URL: " + url);
-            System.out.println("Имя пользователя: " + username);
-
-            Class.forName(driver);
-
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException("Ошибка загрузки свойств регистрации БД.");
-        }
-    }
-
     public static Connection getConnection() {
         Connection connection = null;
         try {
